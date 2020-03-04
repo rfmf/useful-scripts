@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+DIR=0
+TIME=15m
+while getopts d:t: option; do
+  case "${option}" in
+    d) DIR=${OPTARG};;
+    t) TIME=${OPTARG};;
+  esac
+done
+
+if [ $DIR -eq 0 ]; then
+  echo 'Script usage: swaybg-wallpaper-changer -d <images directory> -t <time
+  interval, default: 15m>'
+  exit
+fi
+
+jpgs=$DIR/*.jpg
+
+while true; do
+  count=0
+  for image in $jpgs; do
+    count=$((count + 1))
+  done
+  echo 'total jpgs: '$count
+
+  rand=$(((RANDOM % $count) + 1))
+  echo 'random number: '$rand
+  
+  i=0 
+  for image in $jpgs; do
+    if [ $i -eq $rand ]; then
+      echo 'random image: '$image
+      timeout $TIME swaybg -m stretch -i $image
+    fi
+    i=$((i + 1))
+  done
+done
+
