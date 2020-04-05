@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Requires:
+#   neovim,
+#   jupyter,
+#   jupyter-vim (vim plugin),
+#   proper configuration, according to the jupyter-vim plugin readme
+
+jupyter qtconsole --style=stata-dark &
+nvim -c ':JupyterConnect' $1
